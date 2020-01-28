@@ -32,22 +32,6 @@
     group: wheel
     recurse: yes
 
-- name: Remove existing ebs-snapshot.cron
-  file:
-    path: /etc/cron.daily/ebs-snapshot.cron
-    state: absent
-
-- name: download ebs-snapshot.sh to /opt/oulib/aws/bin
-  get_url:
-    url: https://github.com/OULibraries/aws-ec2-ebs-automatic-snapshot-bash/raw/v20170315.0/ebs-snapshot.sh
-    dest: /opt/oulib/aws/bin/ebs-snapshot.sh
-    checksum: md5:cf922fb1c9519f7da7e4b09640aacda4
-    mode: 0755
-    owner: root
-    group: root
-  when: ((centos_7_ebs_snapshot_retention_days is defined) and (centos_7_ebs_snapshot_retention_days is not none))
-  tags: assets
-
 - name: Copy helper scripts to /opt/oulib/aws/bin
   copy:
     src: "{{ item }}"
@@ -60,12 +44,3 @@
     - ec2_get_arn.sh
     - ec2_get_region.sh
   tags: assets
-
-- name: Add ebs-snapshot.cron to /etc/cron.daily
-  template:
-    src: ebs-snapshot.cron.j2
-    dest: /etc/cron.daily/ebs-snapshot.cron
-    mode: 0755
-    owner: root
-    group: root
-  when: ((centos_7_ebs_snapshot_retention_days is defined) and (centos_7_ebs_snapshot_retention_days is not none))
