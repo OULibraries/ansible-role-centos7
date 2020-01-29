@@ -29,6 +29,7 @@
     - polkit
     - selinux-policy
     - selinux-policy-targeted
+  tags: selinux
 
 - name: yum-cron apply updates
   lineinfile: "dest=/etc/yum/yum-cron.conf state=present regexp='^apply_updates = no$' line='apply_updates = yes'"
