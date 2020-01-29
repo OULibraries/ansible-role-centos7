@@ -24,5 +24,17 @@
 - name: Set hostname to instance name
   shell: hostnamectl set-hostname "{{ server_tag_name.stdout }}"
 
-- name: Also set /etc/hosts for legacy
-  lineinfile: dest=/etc/hosts line="{{ ansible_eth0.ipv4.address }} {{ server_tag_name.stdout }}"
+- name: Set /etc/hosts from eth0 for legacy if possible
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{ ansible_eth0.ipv4.address }} {{ server_tag_name.stdout }}"
+  when: >
+    ansible_eth0 is defined and ansible_eth0 is not none
+
+# This has come up on newer AWS CentOS7 images.
+- name: Otherwise /etc/hosts from ens5 for legacy if possible
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{ ansible_ens5.ipv4.address }} {{ server_tag_name.stdout }}"
+  when: >
+    (ansible_eth0 is not defined or ansible_eth0 is none) and (ansible_ens5 is defined and ansible_ens5 is not none)

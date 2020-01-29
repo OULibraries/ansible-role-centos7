@@ -1,49 +1,46 @@
 ---
+
+- include: fact_check.yml
+
 - include: yum.yml
-  when: (((ansible_distribution == "CentOS") or (ansible_distribution == "RedHat")) and (ansible_distribution_major_version == "7"))
+  when: is_centos7
   become: true
   tags:
   - centos7_yum
 
 - include: setup.yml
-  when: (((ansible_distribution == "CentOS") or (ansible_distribution == "RedHat")) and (ansible_distribution_major_version == "7"))
+  when: is_centos7
   become: true
   tags:
   - centos7_setup
 
 - include: assets.yml
-  when: (((ansible_distribution == "CentOS") or (ansible_distribution == "RedHat")) and (ansible_distribution_major_version == "7"))
+  when: is_centos7
   become: true
   tags:
   - centos7_assets
 
 - include: ec2_assets.yml
-  when: (((ansible_distribution == "CentOS") or (ansible_distribution == "RedHat")) 
-          and (ansible_distribution_major_version == "7") 
-          and (ansible_virtualization_type == "xen" or ansible_virtualization_type == "kvm" ) 
-          and (ansible_virtualization_role == "guest"))
+  when: is_centos7 and is_ec2_guest
   become: true
   tags:
   - centos7_ec2
   - centos7_assets
 
 - include: ec2_setup.yml
-  when: (((ansible_distribution == "CentOS") or (ansible_distribution == "RedHat")) 
-          and (ansible_distribution_major_version == "7") 
-          and (ansible_virtualization_type == "xen" or ansible_virtualization_type == "kvm" ) 
-          and (ansible_virtualization_role == "guest"))
+  when: is_centos7 and is_ec2_guest
   become: true
   tags:
   - centos7_ec2
 
 - include: vmware.yml
-  when: (((ansible_distribution == "CentOS") or (ansible_distribution == "RedHat")) and (ansible_distribution_major_version == "7") and (ansible_virtualization_type == "VMware") and (ansible_virtualization_role == "guest"))
+  when: is_centos7 and is_vmware_guest
   become: true
   tags:
   - centos7_vmware_guest
 
 - include: metal_or_vmware_guest.yml
-  when: (((ansible_distribution == "CentOS") or (ansible_distribution == "RedHat")) and (ansible_distribution_major_version == "7") and ((ansible_virtualization_role == "host") or ((ansible_virtualization_type == "VMware") and (ansible_virtualization_role == "guest"))))
+  when: is_centos7 and (ansible_virtualization_role == "host" or is_vmware_guest)
   become: true
   tags:
   - centos7_metal
