@@ -3,13 +3,13 @@
 - name: Yum update
   yum:
     name: "*"
-    state: latest
+    state: present
     update_cache: yes
 
 - name: Packages for yum.
   yum:
     name: "{{ item }}"
-    state: latest
+    state: present
   with_items:
     - deltarpm
     - epel-release
@@ -21,7 +21,7 @@
 - name: Update SELinux yum packages to latest
   yum:
     name: "{{ item }}"
-    state: latest
+    state: present
   with_items:
     - libselinux-python
     - policycoreutils

@@ -2,7 +2,7 @@
 - name: VMWware-specific packages
   yum:
     name: "{{ item }}"
-    state: latest
+    state: present
   with_items:
   - open-vm-tools
 

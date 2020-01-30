@@ -10,7 +10,7 @@
 - name: Verify latest pip and aws-cli is installed
   pip:
     name: "{{ item }}"
-    state: latest
+    state: present
   with_items:
   - pip
   - awscli
