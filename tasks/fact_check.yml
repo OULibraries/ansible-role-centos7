@@ -8,6 +8,7 @@
     timeout: 2
   register: ec2_uri_check
   failed_when: False
+  check_mode: no
 
 # Setting these facts makes the conditionals in our main task file more legible and DRY.
 - set_fact:
