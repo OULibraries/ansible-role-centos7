@@ -10,7 +10,7 @@
   shell: >
     find /etc/sysconfig/network-scripts -type f -name "ifcfg-*" | sort | head -1
   register: get_ifcfg_path
-  always_run: yes
+  check_mode: no
 
 - name: Start VMWare Tools on boot
   service:

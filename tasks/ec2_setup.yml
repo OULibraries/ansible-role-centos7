@@ -7,19 +7,19 @@
   shell: >
     curl --silent http://instance-data/latest/meta-data/instance-id
   register: instance_id
-  always_run: yes
+  check_mode: no
 
 - name: Get instance region
   shell: >
     AZ=`curl --silent http://instance-data/latest/meta-data/placement/availability-zone`;echo "${AZ::-1}"
   register: region
-  always_run: yes
+  check_mode: no
 
 - name: Get instance Name tag
   shell: >
     aws ec2 describe-tags --filters "Name=resource-id,Values={{ instance_id.stdout }}" "Name=key,Values=Name" --region "{{ region.stdout }}"  | jq --raw-output '.Tags|.[0]|.["Value"]'
   register: server_tag_name
-  always_run: yes
+  check_mode: no
 
 - name: Set hostname to instance name
   shell: hostnamectl set-hostname "{{ server_tag_name.stdout }}"
