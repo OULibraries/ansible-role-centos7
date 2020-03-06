@@ -8,15 +8,14 @@
 
 - name: Packages for yum.
   yum:
-    name: "{{ item }}"
+    name:
+      - deltarpm
+      - epel-release
+      - yum
+      - yum-cron
+      - yum-priorities
+      - yum-plugin-versionlock
     state: present
-  with_items:
-    - deltarpm
-    - epel-release
-    - yum
-    - yum-cron
-    - yum-priorities
-    - yum-plugin-versionlock
 
 - name: Update SELinux yum packages to latest
   yum:
