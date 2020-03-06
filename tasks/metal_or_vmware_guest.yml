@@ -52,4 +52,4 @@
     name: "{{ server_name }}"
 
 - name: Set hostname using hostnamectl
-  shell: hostnamectl set-hostname "{{ server_name }}"
+  command: hostnamectl set-hostname "{{ server_name }}"
