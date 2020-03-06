@@ -1,24 +1,9 @@
 ---
-- name: Pip build dependencies are present
-  yum:
-    name:
-      - gcc
-      - python-devel
-    state: present
 
-- name: Verify latest pip and aws-cli is installed
-  pip:
-    name:
-      - pip
-      - awscli
-    state: present
-
-- name: Pip build dependencies are absent
+- name: Enxure that awscli is installed
   yum:
-    name:
-      - gcc
-      - python-devel
-    state: absent
+    name: awscli
+    state: present
 
 - name: Ensure /opt/oulib/aws/bin exists
   file:
