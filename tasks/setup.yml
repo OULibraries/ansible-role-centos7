@@ -2,7 +2,7 @@
 
 - name: Check Timezone
   shell: >
-    timedatectl status | grep Timezone: | cut -d ':' -f 2 | cut -d '(' -f 1 | xargs
+    set -o pipefail && timedatectl status | grep Timezone: | cut -d ':' -f 2 | cut -d '(' -f 1 | xargs
   check_mode: no
   register: timezone
   changed_when: timezone.stdout != "{{ server_timezone }}"
