@@ -11,6 +11,7 @@
     set -o pipefail && find /etc/sysconfig/network-scripts -type f -name "ifcfg-*" | sort | head -1
   register: get_ifcfg_path
   check_mode: no
+  changed_when: false
 
 - name: Start VMWare Tools on boot
   service:
