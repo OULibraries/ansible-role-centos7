@@ -78,6 +78,6 @@
 
 - name: Apply sysctl
   command: sysctl -p
-  when: 
+  when:
     - centos7_ipv6_disable
 
