@@ -7,7 +7,7 @@
   uri:
     url: http://instance-data/latest/meta-data/instance-id
     return_content: yes
-    register: instance_id
+  register: instance_id
   check_mode: no
 
 - name: Get instance region
