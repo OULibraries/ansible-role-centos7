@@ -4,25 +4,33 @@
   lineinfile: "dest=/etc/cloud/cloud.cfg line='preserve_hostname: true'"
 
 - name: Get instance ID
-  shell: >
-    curl --silent http://instance-data/latest/meta-data/instance-id
-  register: instance_id
-  check_mode: no
+  uri:
+    url: http://instance-data/latest/meta-data/instance-id
+    return_content: yes
+    register: instance_id
+    check_mode: no
 
 - name: Get instance region
   shell: >
     AZ=`curl --silent http://instance-data/latest/meta-data/placement/availability-zone`;echo "${AZ::-1}"
   register: region
   check_mode: no
+  changed_when: false
 
 - name: Get instance Name tag
   shell: >
-    aws ec2 describe-tags --filters "Name=resource-id,Values={{ instance_id.stdout }}" "Name=key,Values=Name" --region "{{ region.stdout }}"  | jq --raw-output '.Tags|.[0]|.["Value"]'
+    set -o pipefail 
+    && aws ec2 describe-tags 
+    --filters "Name=resource-id,Values={{ instance_id.content }}" 
+              "Name=key,Values=Name" --region "{{ region.stdout }}"  
+    | jq --raw-output '.Tags|.[0]|.["Value"]'
   register: server_tag_name
   check_mode: no
+  changed_when: false
 
 - name: Set hostname to instance name
-  shell: hostnamectl set-hostname "{{ server_tag_name.stdout }}"
+  command: hostnamectl set-hostname "{{ server_tag_name.stdout }}"
+  when:
 
 - name: Set /etc/hosts from eth0 for legacy if possible
   lineinfile:
