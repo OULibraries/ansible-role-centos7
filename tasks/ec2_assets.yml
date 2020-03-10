@@ -12,7 +12,6 @@
     mode: 0755
     owner: root
     group: wheel
-    recurse: yes
 
 - name: Copy helper scripts to /opt/oulib/aws/bin
   copy:
@@ -20,7 +19,7 @@
     dest: /opt/oulib/aws/bin
     mode: 0755
     owner: root
-    group: root
+    group: wheel
   with_items:
     - ec2_get_account_id.sh
     - ec2_get_arn.sh
