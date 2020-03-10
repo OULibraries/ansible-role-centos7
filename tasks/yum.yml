@@ -12,7 +12,6 @@
       - deltarpm
       - epel-release
       - yum
-      - yum-cron
       - yum-priorities
       - yum-plugin-versionlock
     state: present
@@ -28,15 +27,6 @@
       - selinux-policy-targeted
     state: present
   tags: selinux
-
-- name: yum-cron apply updates
-  lineinfile: "dest=/etc/yum/yum-cron.conf state=present regexp='^apply_updates = no$' line='apply_updates = yes'"
-
-- name: Start yum-cron on boot
-  service:
-    name: yum-cron
-    state: started
-    enabled: yes
 
 - name: CentOS-Base has priority
   ini_file:
