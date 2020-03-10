@@ -19,15 +19,14 @@
 
 - name: Update SELinux yum packages to latest
   yum:
-    name: "{{ item }}"
+    name:
+      - libselinux-python
+      - policycoreutils
+      - policycoreutils-python
+      - polkit
+      - selinux-policy
+      - selinux-policy-targeted
     state: present
-  with_items:
-    - libselinux-python
-    - policycoreutils
-    - policycoreutils-python
-    - polkit
-    - selinux-policy
-    - selinux-policy-targeted
   tags: selinux
 
 - name: yum-cron apply updates
@@ -44,7 +43,7 @@
     dest: /etc/yum.repos.d/CentOS-Base.repo
     section: base
     option: priority
-    value: 1
+    value: "1"
     backup: yes
   when: ((ansible_distribution == "CentOS")  and (ansible_distribution_major_version == "7"))
 
@@ -54,32 +53,31 @@
     dest: /etc/yum.repos.d/CentOS-Base.repo
     section: updates
     option: priority
-    value: 1
+    value: "1"
     backup: yes
   when: ((ansible_distribution == "CentOS")  and (ansible_distribution_major_version == "7"))
 
 - name: Utility packages.
   yum:
-    name: "{{ item }}"
+    name:
+      - ack
+      - bind-utils
+      - bash-completion
+      - curl
+      - emacs-nox
+      - git
+      - htop
+      - iotop
+      - jq
+      - nload
+      - psmisc
+      - python-pip
+      - screen
+      - shadow-utils
+      - sysstat
+      - tmux
+      - tree
+      - unzip
+      - vim
+      - wget
     state: present
-  with_items:
-  - ack
-  - bind-utils
-  - bash-completion
-  - curl
-  - emacs-nox
-  - git
-  - htop
-  - iotop
-  - jq
-  - nload
-  - psmisc
-  - python-pip
-  - screen
-  - shadow-utils
-  - sysstat
-  - tmux
-  - tree
-  - unzip
-  - vim
-  - wget

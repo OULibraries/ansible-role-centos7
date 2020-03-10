@@ -2,10 +2,9 @@
 
 - name: Metal- or VMWare-specific packages
   yum:
-    name: "{{ item }}"
+    name:
+      - iptables-services
     state: present
-  with_items:
-  - iptables-services
 
 - name: Disable firewalld
   service:

@@ -1,10 +1,9 @@
 ---
 - name: VMWware-specific packages
   yum:
-    name: "{{ item }}"
+    name:
+      - open-vm-tools
     state: present
-  with_items:
-  - open-vm-tools
 
 - name: Get ifcfg path
   shell: >
