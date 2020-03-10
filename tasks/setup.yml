@@ -58,6 +58,7 @@
     regexp: '^((::1)(.+))$'
     replace: '#\1'
     backup: yes
+    unsafe_writes: "{{ 'yes' if is_docker_guest else 'no' }}"
   when:
     - centos7_ipv6_disable
 
