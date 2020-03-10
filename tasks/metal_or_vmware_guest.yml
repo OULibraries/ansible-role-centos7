@@ -49,6 +49,8 @@
 - name: Set hostname using ansible module
   hostname:
     name: "{{ server_name }}"
+  register: set_hostname
 
 - name: Set hostname using hostnamectl
   command: hostnamectl set-hostname "{{ server_name }}"
+  when: set_hostname.changed
