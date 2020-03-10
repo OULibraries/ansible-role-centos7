@@ -17,6 +17,3 @@
     is_ec2_guest: "{{ ec2_uri_check.status == 200 or ('amazon' in ansible_product_version and ansible_virtualization_role == 'guest') }}"
     is_vmware_guest: "{{ ansible_virtualization_type == 'VMware' and ansible_virtualization_role == 'guest' }}"
     is_docker_guest: "{{ ansible_virtualization_type == 'docker' and ansible_virtualization_role == 'guest' }}"
-
-- debug:
-    var: is_docker_guest
