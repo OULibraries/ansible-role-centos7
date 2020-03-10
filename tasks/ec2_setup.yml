@@ -20,9 +20,9 @@
 - name: Get instance Name tag
   shell: >
     set -o pipefail
-    && aws ec2 describe-tags
-    --filters "Name=resource-id,Values={{ instance_id.content }}"
-              "Name=key,Values=Name" --region "{{ region.stdout }}"
+    && aws ec2 describe-tags --filters 
+    "Name=resource-id,Values={{ instance_id.content }}"
+    "Name=key,Values=Name" --region "{{ region.stdout }}"
     | jq --raw-output '.Tags|.[0]|.["Value"]'
   register: server_tag_name
   check_mode: no
