@@ -61,7 +61,6 @@
       - jq
       - nload
       - psmisc
-      - python-pip
       - screen
       - shadow-utils
       - sysstat
