@@ -7,7 +7,7 @@
     url: http://169.254.169.254/latest/meta-data
     timeout: 2
   register: ec2_uri_check
-  failed_when: ec2_uri_check.status != 200
+  failed_when: false
   check_mode: no
 
 # Setting these facts makes the conditionals in our main task file more legible and DRY.
