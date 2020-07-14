@@ -20,12 +20,8 @@
     - colorprompt.sh
     - editor.sh
 
-- name: Copy util scripts
-  copy:
-    src: "{{ item }}"
-    dest: /opt/oulib/centos7/bin/
-    owner: root
-    group: wheel
-    mode: 0755
-  with_items:
-    - cpu_check_steal.sh
+- name: Remove cpu_check_steal file
+  file:
+    path: /opt/oulib/centos7/bin/cpu_check_steal.sh
+    state: absent
+  become: true
