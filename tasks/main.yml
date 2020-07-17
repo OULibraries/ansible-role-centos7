@@ -1,6 +1,8 @@
 ---
 
 - include: fact_check.yml
+  tags:
+  - always
 
 - include: yum.yml
   when: is_centos7
