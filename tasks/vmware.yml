@@ -1,16 +1,16 @@
 ---
 - name: VMWware-specific packages
   yum:
-    name: "{{ item }}"
-    state: latest
-  with_items:
-  - open-vm-tools
+    name:
+      - open-vm-tools
+    state: present
 
 - name: Get ifcfg path
   shell: >
-    find /etc/sysconfig/network-scripts -type f -name "ifcfg-*" | sort | head -1
+    set -o pipefail && find /etc/sysconfig/network-scripts -type f -name "ifcfg-*" | sort | head -1
   register: get_ifcfg_path
-  always_run: yes
+  check_mode: no
+  changed_when: false
 
 - name: Start VMWare Tools on boot
   service:

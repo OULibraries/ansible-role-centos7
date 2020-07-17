@@ -1,3 +1,3 @@
 - name: Set timezone
   command: timedatectl set-timezone "{{ server_timezone }}"
-  become: true  
+  become: true

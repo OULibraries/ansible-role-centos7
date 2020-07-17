@@ -3,49 +3,37 @@
 - name: Yum update
   yum:
     name: "*"
-    state: latest
+    state: present
     update_cache: yes
 
 - name: Packages for yum.
   yum:
-    name: "{{ item }}"
-    state: latest
-  with_items:
-    - deltarpm
-    - epel-release
-    - yum
-    - yum-cron
-    - yum-priorities
-    - yum-plugin-versionlock
+    name:
+      - deltarpm
+      - epel-release
+      - yum
+      - yum-priorities
+      - yum-plugin-versionlock
+    state: present
 
 - name: Update SELinux yum packages to latest
   yum:
-    name: "{{ item }}"
-    state: latest
-  with_items:
-    - libselinux-python
-    - policycoreutils
-    - policycoreutils-python
-    - polkit
-    - selinux-policy
-    - selinux-policy-targeted
+    name:
+      - libselinux-python
+      - policycoreutils
+      - policycoreutils-python
+      - polkit
+      - selinux-policy
+      - selinux-policy-targeted
+    state: present
   tags: selinux
-
-- name: yum-cron apply updates
-  lineinfile: "dest=/etc/yum/yum-cron.conf state=present regexp='^apply_updates = no$' line='apply_updates = yes'"
-
-- name: Start yum-cron on boot
-  service:
-    name: yum-cron
-    state: started
-    enabled: yes
 
 - name: CentOS-Base has priority
   ini_file:
     dest: /etc/yum.repos.d/CentOS-Base.repo
     section: base
     option: priority
-    value: 1
+    value: "1"
     backup: yes
   when: ((ansible_distribution == "CentOS")  and (ansible_distribution_major_version == "7"))
 
@@ -55,32 +43,30 @@
     dest: /etc/yum.repos.d/CentOS-Base.repo
     section: updates
     option: priority
-    value: 1
+    value: "1"
     backup: yes
   when: ((ansible_distribution == "CentOS")  and (ansible_distribution_major_version == "7"))
 
 - name: Utility packages.
   yum:
-    name: "{{ item }}"
+    name:
+      - ack
+      - bind-utils
+      - bash-completion
+      - curl
+      - emacs-nox
+      - git
+      - htop
+      - iotop
+      - jq
+      - nload
+      - psmisc
+      - screen
+      - shadow-utils
+      - sysstat
+      - tmux
+      - tree
+      - unzip
+      - vim
+      - wget
     state: present
-  with_items:
-  - ack
-  - bind-utils
-  - bash-completion
-  - curl
-  - emacs-nox
-  - git
-  - htop
-  - iotop
-  - jq
-  - nload
-  - psmisc
-  - python-pip
-  - screen
-  - shadow-utils
-  - sysstat
-  - tmux
-  - tree
-  - unzip
-  - vim
-  - wget

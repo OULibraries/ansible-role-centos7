@@ -2,10 +2,10 @@
 
 - name: Check Timezone
   shell: >
-    timedatectl status | grep Timezone: | cut -d ':' -f 2 | cut -d '(' -f 1 | xargs
-  always_run: yes
+    set -o pipefail && timedatectl status | grep Time\ zone: | cut -d ':' -f 2 | cut -d '(' -f 1 | xargs
+  check_mode: no
   register: timezone
-  changed_when: timezone.stdout != "{{ server_timezone }}"
+  changed_when: timezone.stdout != server_timezone
   notify:
   - Set timezone
 
@@ -58,6 +58,7 @@
     regexp: '^((::1)(.+))$'
     replace: '#\1'
     backup: yes
+    unsafe_writes: "{{ 'yes' if is_docker_guest else 'no' }}"
   when:
     - centos7_ipv6_disable
 
@@ -78,6 +79,6 @@
 
 - name: Apply sysctl
   command: sysctl -p
-  when: 
+  when:
     - centos7_ipv6_disable
 
