@@ -59,6 +59,7 @@
       - htop
       - iotop
       - jq
+      - lsof
       - nload
       - psmisc
       - screen
