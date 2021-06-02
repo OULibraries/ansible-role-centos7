@@ -25,6 +25,8 @@
       - polkit
       - selinux-policy
       - selinux-policy-targeted
+      - setroubleshoot-plugins.noarch
+      - setroubleshoot.x86_64
     state: present
   tags: selinux
 
