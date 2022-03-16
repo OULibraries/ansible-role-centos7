@@ -3,7 +3,7 @@
 - name: Yum update
   yum:
     name: "*"
-    state: present
+    state: latest
     update_cache: yes
 
 - name: Packages for yum.
