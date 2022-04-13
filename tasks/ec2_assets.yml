@@ -1,10 +1,5 @@
 ---
 
-- name: Enxure that awscli is installed
-  yum:
-    name: awscli
-    state: present
-
 - name: Ensure /opt/oulib/aws/bin exists
   file:
     path: /opt/oulib/aws/bin
